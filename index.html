@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>exit 0 — Quiz de Linux</title>
+<meta name="description" content="Quiz de comandos e conceitos de Linux, feito para a disciplina de Sistemas Operacionais Linux da turma TI23.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+
+<a class="pular" href="#principal">Pular para o conteúdo</a>
+
+<main id="principal">
+
+<!-- ====================================================== TELA INICIAL ==== -->
+<section id="tela-inicio" class="tela tela--ativa" aria-labelledby="titulo-projeto">
+  <div class="marca" aria-hidden="true">
+    <span class="marca__prompt">lucas@ti23</span><span class="marca__sep">:</span><span class="marca__caminho">~</span><span class="marca__cifrao">$</span>
+  </div>
+
+  <h1 id="titulo-projeto" class="titulo">exit&nbsp;0</h1>
+  <p class="subtitulo">Quiz de comandos e conceitos de Linux</p>
+
+  <p class="descricao">
+    Vinte perguntas sorteadas de um banco de <strong id="total-banco">52</strong>, cobrindo o que
+    foi visto na disciplina: navegação, permissões, usuários, redirecionamento, processos, rede,
+    captura de pacotes e SSH. Cada resposta vem com a explicação técnica, e várias delas foram
+    <strong>medidas na VM Debian&nbsp;13</strong> da matéria, não copiadas de livro.
+  </p>
+
+  <dl class="ficha">
+    <div class="ficha__linha">
+      <dt>Aluno</dt>
+      <dd>Lucas Fernando Vasconcelos da Silva</dd>
+    </div>
+    <div class="ficha__linha">
+      <dt>Turma</dt>
+      <dd>TI23 — Técnico em Informática</dd>
+    </div>
+    <div class="ficha__linha">
+      <dt>Componente</dt>
+      <dd>Sistemas Operacionais Linux</dd>
+    </div>
+    <div class="ficha__linha">
+      <dt>Professor</dt>
+      <dd>Cristiano Forte</dd>
+    </div>
+  </dl>
+
+  <button id="btn-iniciar" class="botao botao--principal" type="button">
+    Iniciar o quiz
+  </button>
+
+  <p class="rodape-inicio">
+    Também dá para responder pelo teclado: <kbd>1</kbd>–<kbd>4</kbd> escolhem,
+    <kbd>Enter</kbd> avança.
+  </p>
+</section>
+
+<!-- ========================================================= TELA QUIZ ==== -->
+<section id="tela-quiz" class="tela" aria-labelledby="enunciado" hidden>
+
+  <header class="barra">
+    <div class="barra__topo">
+      <span class="barra__contagem">
+        pergunta <strong id="num-atual">1</strong> de <strong id="num-total">20</strong>
+      </span>
+      <span class="barra__placar">
+        <span class="placar__item placar__item--ok">
+          <span class="placar__rotulo">0</span>
+          <span class="placar__valor" id="placar-acertos">0</span>
+        </span>
+        <span class="placar__item placar__item--erro">
+          <span class="placar__rotulo">1</span>
+          <span class="placar__valor" id="placar-erros">0</span>
+        </span>
+      </span>
+    </div>
+
+    <!-- a assinatura: um bloco por pergunta, que preenche com o codigo de saida -->
+    <ol id="regua" class="regua" aria-label="Progresso: um bloco por pergunta"></ol>
+  </header>
+
+  <p class="categoria" id="categoria"></p>
+  <h2 class="enunciado" id="enunciado"></h2>
+
+  <ul class="alternativas" id="alternativas"></ul>
+
+  <div class="retorno" id="retorno" role="status" aria-live="polite" hidden>
+    <p class="retorno__linha" id="retorno-veredito"></p>
+    <p class="retorno__explicacao" id="retorno-explicacao"></p>
+  </div>
+
+  <div class="acoes">
+    <button id="btn-proxima" class="botao botao--principal" type="button" hidden>
+      Próxima
+    </button>
+  </div>
+</section>
+
+<!-- ==================================================== TELA RESULTADO ==== -->
+<section id="tela-resultado" class="tela" aria-labelledby="titulo-resultado" hidden>
+  <h2 id="titulo-resultado" class="resultado__titulo">Resultado</h2>
+
+  <div class="saida" role="group" aria-label="Resultado do quiz">
+    <p class="saida__comando"><span class="saida__cifrao">$</span> quiz --resultado</p>
+    <dl class="saida__bloco">
+      <div class="saida__linha">
+        <dt>Perguntas</dt><dd id="r-total">20</dd>
+      </div>
+      <div class="saida__linha saida__linha--ok">
+        <dt>Acertos</dt><dd id="r-acertos">0</dd>
+      </div>
+      <div class="saida__linha saida__linha--erro">
+        <dt>Erros</dt><dd id="r-erros">0</dd>
+      </div>
+      <div class="saida__linha saida__linha--destaque">
+        <dt>Aproveitamento</dt><dd id="r-aproveitamento">0%</dd>
+      </div>
+    </dl>
+    <p class="saida__comando"><span class="saida__cifrao">$</span> echo $?</p>
+    <p class="saida__codigo" id="r-codigo">0</p>
+  </div>
+
+  <p class="veredito" id="r-veredito"></p>
+
+  <section class="revisao" aria-labelledby="titulo-revisao">
+    <h3 id="titulo-revisao" class="revisao__titulo">O que você errou</h3>
+    <ul class="revisao__lista" id="revisao-lista"></ul>
+  </section>
+
+  <div class="acoes acoes--centro">
+    <button id="btn-refazer" class="botao botao--principal" type="button">
+      Jogar de novo
+    </button>
+  </div>
+</section>
+
+</main>
+
+<footer class="rodape">
+  <p>
+    TI23 · Sistemas Operacionais Linux · 2026
+    — <a href="https://github.com/Sgnetox/quiz-linux-ti23">código no GitHub</a>
+  </p>
+</footer>
+
+<script src="js/perguntas.js"></script>
+<script src="js/quiz.js"></script>
+</body>
+</html>
